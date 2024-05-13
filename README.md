@@ -91,3 +91,7 @@ python demo.py
 ## Citation
 
 If you use our model for your project, please cite: `TODO`
+
+--------------------------------------------------------------------------------
+
+This is not an officially supported Google product.
