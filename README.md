@@ -8,8 +8,8 @@
 
 --------------------------------------------------------------------------------
 
-[**Project Page**](https://hwjiang1510.github.io/OmniGlue/) | [**Paper**]() |
-[**Usage**]()
+[**Project Page**](https://hwjiang1510.github.io/OmniGlue/) | [**Paper**](https://arxiv.org/abs/TODO) |
+[**Usage**](#installation)
 
 Official code release for the CVPR 2024 paper: **OmniGlue: Generalizable Feature
 Matching with Foundation Model Guidance**.
@@ -88,9 +88,22 @@ python demo.py
 # <see output in './demo_output.png'>
 ```
 
-## Citation
+## Repo TODOs
 
-If you use our model for your project, please cite: `TODO`
+- ~~Provide `demo.py` example usage script.~~
+- Support matching for pre-extracted features.
+- Release eval pipelines for in-domain (MegaDepth).
+- Release eval pipelines for all out-of-domain datasets.
+
+## BibTex
+```
+@inproceedings{jiang2024Omniglue,
+   title={OmniGlue: Generalizable Feature Matching with Foundation Model Guidance},
+   author={Jiang, Hanwen and Karpur, Arjun and Cao, Bingyi and Huang, Qixing and Araujo, Andre},
+   booktitle={Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)},
+   year={2024},
+}
+```
 
 --------------------------------------------------------------------------------
 
