@@ -45,15 +45,17 @@ cd omniglue
 pip install -e .
 ```
 
-Then , download the following models to `./models/`
+Then, download the following models to `./models/`
 
--   [SuperPoint weights]()
--   [DINOv2 weights]()
--   [OmniGlue weights]()
+-   [[SuperPoint weights]](https://drive.google.com/file/d/18VpMXubyWL6WoNfyq6kQ6g4AM19QJ0FV/view): from [github.com/rpautrat/SuperPoint](https://github.com/rpautrat/SuperPoint)
+-   [[DINOv2 weights]](https://dl.fbaipublicfiles.com/dinov2/dinov2_vitb14/dinov2_vitb14_pretrain.pth): from [github.com/facebookresearch/dinov2](https://github.com/facebookresearch/dinov2) (ViT-B/14 distilled backbone without register).
+-   [[OmniGlue weights]](https://storage.googleapis.com/omniglue/og_export.zip)
 
 ```sh
 mkdir models
-mv ~/Downloads/og_export ~/Downloads/sp_v6  ~/Downloads/dinov2_vitb14.pth models/
+mv ~/Downloads/og_export.zip ~/Downloads/sp_v6  ~/Downloads/dinov2_vitb14_pretrain.pth ./models/
+cd models
+unzip og_export.zip && rm og_export.zip
 ```
 
 ## Usage
@@ -68,7 +70,7 @@ image1 = ...
 og = omniglue.OmniGlue(
   og_export='./models/og_export',
   sp_export='./models/sp_v6',
-  dino_export='./models/dinov2_vitb14.pth',
+  dino_export='./models/dinov2_vitb14_pretrain.pth',
 )
 
 match_kp0s, match_kp1s, match_confidences = og.FindMatches(image0, image1)
