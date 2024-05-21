@@ -47,10 +47,6 @@ pip install -e .
 
 Then, download the following models to `./models/`
 
--   [[SuperPoint weights]](https://drive.google.com/file/d/18VpMXubyWL6WoNfyq6kQ6g4AM19QJ0FV/view): from [github.com/rpautrat/SuperPoint](https://github.com/rpautrat/SuperPoint)
--   [[DINOv2 weights]](https://dl.fbaipublicfiles.com/dinov2/dinov2_vitb14/dinov2_vitb14_pretrain.pth): from [github.com/facebookresearch/dinov2](https://github.com/facebookresearch/dinov2) (ViT-B/14 distilled backbone without register).
--   [[OmniGlue weights]](https://storage.googleapis.com/omniglue/og_export.zip)
-
 ```sh
 # Download to ./models/ dir.
 mkdir models
@@ -69,7 +65,15 @@ wget https://storage.googleapis.com/omniglue/og_export.zip
 unzip og_export.zip && rm og_export.zip
 ```
 
+Direct download links:
+
+-   [[SuperPoint weights]](https://github.com/rpautrat/SuperPoint/tree/master/pretrained_models): from [github.com/rpautrat/SuperPoint](https://github.com/rpautrat/SuperPoint)
+-   [[DINOv2 weights]](https://dl.fbaipublicfiles.com/dinov2/dinov2_vitb14/dinov2_vitb14_pretrain.pth): from [github.com/facebookresearch/dinov2](https://github.com/facebookresearch/dinov2) (ViT-B/14 distilled backbone without register).
+-   [[OmniGlue weights]](https://storage.googleapis.com/omniglue/og_export.zip)
+
 ## Usage
+The code snippet below outlines how you can perform OmniGlue inference in your
+own python codebase.
 
 ```py
 
@@ -93,11 +97,13 @@ match_kp0s, match_kp1s, match_confidences = og.FindMatches(image0, image1)
 
 ## Demo
 
-`demo.py` contains example usage of the `omniglue` module.
+`demo.py` contains example usage of the `omniglue` module. To try with your own
+images, replace `./res/navi_1.png` and `./res/navi_2.png` with your own
+filepaths.
 
 ```sh
 conda activate omniglue
-python demo.py
+python demo.py ./res/navi_1.png ./res/navi_2.png
 # <see output in './demo_output.png'>
 ```
 

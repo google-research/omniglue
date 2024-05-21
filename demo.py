@@ -15,6 +15,7 @@
 
 """Demo script for performing OmniGlue inference."""
 
+import sys
 import time
 import matplotlib.pyplot as plt
 import numpy as np
@@ -23,11 +24,14 @@ from omniglue import utils
 from PIL import Image
 
 
-def main() -> None:
+def main(argv) -> None:
+  if len(argv) != 3:
+    print("error - usage: python demo.py <img1_fp> <img2_fp>")
+    return
 
   print("> Loading images...")
-  image0 = np.array(Image.open("./res/navi_1.png"))
-  image1 = np.array(Image.open("./res/navi_2.png"))
+  image0 = np.array(Image.open(argv[1]))
+  image1 = np.array(Image.open(argv[2]))
 
   print("> Loading OmniGlue (and its submodules: SuperPoint & DINOv2)...")
   start = time.time()
@@ -65,4 +69,4 @@ def main() -> None:
 
 
 if __name__ == "__main__":
-  main()
+  main(sys.argv)
