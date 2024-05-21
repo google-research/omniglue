@@ -37,10 +37,10 @@ LightGlue method by 10.1% relatively.
 First, use pip to install `omniglue`:
 
 ```sh
-conda create -n omniglue
+conda create -n omniglue pip
 conda activate omniglue
 
-git clone <..repo...>
+git clone https://github.com/google-research/omniglue.git
 cd omniglue
 pip install -e .
 ```
@@ -52,9 +52,20 @@ Then, download the following models to `./models/`
 -   [[OmniGlue weights]](https://storage.googleapis.com/omniglue/og_export.zip)
 
 ```sh
+# Download to ./models/ dir.
 mkdir models
-mv ~/Downloads/og_export.zip ~/Downloads/sp_v6  ~/Downloads/dinov2_vitb14_pretrain.pth ./models/
 cd models
+
+# SuperPoint.
+git clone https://github.com/rpautrat/SuperPoint.git
+mv SuperPoint/pretrained_models/sp_v6.tgz . && rm -rf SuperPoint
+tar zxvf sp_v6.tgz && rm sp_v6.tgz
+
+# DINOv2 - vit-b14.
+wget https://dl.fbaipublicfiles.com/dinov2/dinov2_vitb14/dinov2_vitb14_pretrain.pth
+
+# OmniGlue.
+wget https://storage.googleapis.com/omniglue/og_export.zip
 unzip og_export.zip && rm og_export.zip
 ```
 
@@ -89,6 +100,10 @@ conda activate omniglue
 python demo.py
 # <see output in './demo_output.png'>
 ```
+
+Expected output:
+![demo_output.png](res/demo_output.png "demo_output.png")
+
 
 ## Repo TODOs
 

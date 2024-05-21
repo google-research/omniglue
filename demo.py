@@ -34,7 +34,7 @@ def main() -> None:
   og = omniglue.OmniGlue(
       og_export="./models/og_export",
       sp_export="./models/sp_v6",
-      dino_export="./models/dinov2_vitb14.pth",
+      dino_export="./models/dinov2_vitb14_pretrain.pth",
   )
   print(f"> \tTook {time.time() - start} seconds.")
 

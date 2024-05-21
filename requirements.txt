@@ -4,3 +4,4 @@ opencv-python
 Pillow
 tensorflow
 torch
+gdown
