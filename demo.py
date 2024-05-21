@@ -29,10 +29,12 @@ def main(argv) -> None:
     print("error - usage: python demo.py <img1_fp> <img2_fp>")
     return
 
+  # Load images.
   print("> Loading images...")
   image0 = np.array(Image.open(argv[1]))
   image1 = np.array(Image.open(argv[2]))
 
+  # Load models.
   print("> Loading OmniGlue (and its submodules: SuperPoint & DINOv2)...")
   start = time.time()
   og = omniglue.OmniGlue(
@@ -42,23 +44,38 @@ def main(argv) -> None:
   )
   print(f"> \tTook {time.time() - start} seconds.")
 
+  # Perform inference.
   print("> Finding matches...")
   start = time.time()
   match_kp0, match_kp1, match_confidences = og.FindMatches(image0, image1)
-  num_inliers = match_kp0.shape[0]
-  print(f"> \tFound {num_inliers} inliers.")
+  num_matches = match_kp0.shape[0]
+  print(f"> \tFound {num_matches} matches.")
   print(f"> \tTook {time.time() - start} seconds.")
 
+  # Filter by confidence (0.02).
+  print("> Filtering matches...")
+  match_threshold = 0.02  # Choose any value [0.0, 1.0).
+  keep_idx = []
+  for i in range(match_kp0.shape[0]):
+    if match_confidences[i] > match_threshold:
+      keep_idx.append(i)
+  num_filtered_matches = len(keep_idx)
+  match_kp0 = match_kp0[keep_idx]
+  match_kp1 = match_kp1[keep_idx]
+  match_confidences = match_confidences[keep_idx]
+  print(f"> \tFound {num_filtered_matches}/{num_matches} above threshold {match_threshold}")
+
+  # Visualize.
   print("> Visualizing matches...")
   viz = utils.visualize_matches(
       image0,
       image1,
       match_kp0,
       match_kp1,
-      np.eye(num_inliers),
+      np.eye(num_filtered_matches),
       show_keypoints=True,
       highlight_unmatched=True,
-      title=f"{num_inliers} inliers",
+      title=f"{num_filtered_matches} matches",
       line_width=2,
   )
   plt.figure(figsize=(20, 10), dpi=100, facecolor="w", edgecolor="k")

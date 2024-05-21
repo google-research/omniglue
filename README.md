@@ -100,12 +100,12 @@ match_kp0s, match_kp1s, match_confidences = og.FindMatches(image0, image1)
 ## Demo
 
 `demo.py` contains example usage of the `omniglue` module. To try with your own
-images, replace `./res/navi_1.png` and `./res/navi_2.png` with your own
+images, replace `./res/demo1.jpg` and `./res/demo2.jpg` with your own
 filepaths.
 
 ```sh
 conda activate omniglue
-python demo.py ./res/navi_1.png ./res/navi_2.png
+python demo.py ./res/demo1.jpg ./res/demo2.jpg
 # <see output in './demo_output.png'>
 ```
 
