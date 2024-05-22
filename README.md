@@ -8,7 +8,7 @@
 
 --------------------------------------------------------------------------------
 
-[**Project Page**](https://hwjiang1510.github.io/OmniGlue/) | [**Paper**](https://arxiv.org/abs/TODO) |
+[**Project Page**](https://hwjiang1510.github.io/OmniGlue/) | [**Paper**](https://arxiv.org/abs/2405.12979) |
 [**Usage**](#installation)
 
 Official code release for the CVPR 2024 paper: **OmniGlue: Generalizable Feature
