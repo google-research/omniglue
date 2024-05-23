@@ -1,15 +1,29 @@
+<div align="center">
+
 # \[CVPR'24\] Code release for OmniGlue
 
-[Hanwen Jiang](https://hwjiang1510.github.io/),
-[Arjun Karpur](https://scholar.google.com/citations?user=jgSItF4AAAAJ),
-[Bingyi Cao](https://scholar.google.com/citations?user=7EeSOcgAAAAJ),
-[Qixing Huang](https://www.cs.utexas.edu/~huangqx/),
-[Andre Araujo](https://andrefaraujo.github.io/)
+<p align="center">
+    <a href="https://hwjiang1510.github.io/">Hanwen Jiang</a>,
+    <a href="https://scholar.google.com/citations?user=jgSItF4AAAAJ">Arjun Karpur</a>,
+    <a href="https://scholar.google.com/citations?user=7EeSOcgAAAAJ">Bingyi Cao</a>,
+    <a href="https://www.cs.utexas.edu/~huangqx/">Qixing Huang</a>,
+    <a href="https://andrefaraujo.github.io/">Andre Araujo</a>
+</p>
+
+</div>
 
 --------------------------------------------------------------------------------
 
-[**Project Page**](https://hwjiang1510.github.io/OmniGlue/) | [**Paper**](https://arxiv.org/abs/2405.12979) |
-[**Usage**](#installation)
+<div align="center">
+    <a href="https://hwjiang1510.github.io/OmniGlue/"><strong>Project Page</strong></a> |
+    <a href="https://arxiv.org/abs/2405.12979"><strong>Paper</strong></a> |
+    <a href="#installation"><strong>Usage</strong></a>
+</div>
+
+<br>
+
+Official code release for the CVPR 2024 paper: **OmniGlue: Generalizable Feature
+Matching with Foundation Model Guidance**.
 
 Official code release for the CVPR 2024 paper: **OmniGlue: Generalizable Feature
 Matching with Foundation Model Guidance**.
