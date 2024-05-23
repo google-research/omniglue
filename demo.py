@@ -15,6 +15,7 @@
 
 """Demo script for performing OmniGlue inference."""
 
+import os
 import sys
 import time
 import matplotlib.pyplot as plt
@@ -26,8 +27,13 @@ from PIL import Image
 
 def main(argv) -> None:
   if len(argv) != 3:
-    print("error - usage: python demo.py <img1_fp> <img2_fp>")
-    return
+    raise ValueError("Incorrect command line usage - usage: python demo.py <img1_fp> <img2_fp>")
+  image0_fp = argv[1]
+  image1_fp = argv[2]
+  for im_fp in [image0_fp, image1_fp]:
+    if not os.path.exists(im_fp) or not os.path.isfile(im_fp):
+      raise ValueError(f"Image filepath '{im_fp}' doesn't exist or is not a file.")
+
 
   # Load images.
   print("> Loading images...")
