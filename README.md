@@ -25,9 +25,6 @@
 Official code release for the CVPR 2024 paper: **OmniGlue: Generalizable Feature
 Matching with Foundation Model Guidance**.
 
-Official code release for the CVPR 2024 paper: **OmniGlue: Generalizable Feature
-Matching with Foundation Model Guidance**.
-
 ![og_diagram.png](res/og_diagram.png "og_diagram.png")
 
 **Abstract:** The image matching field has been witnessing a continuous
