@@ -22,7 +22,9 @@
 </div>
 
 <div align="center">
+
 [![Open in Spaces](https://huggingface.co/datasets/huggingface/badges/resolve/main/open-in-hf-spaces-sm.svg)](https://huggingface.co/spaces/qubvel-hf/omniglue)
+
 </div>
 
 <br>
