@@ -21,7 +21,9 @@
     <a href="https://huggingface.co/spaces/qubvel-hf/omniglue"><strong>Demo</strong></a>
 </div>
 
+<div align="center">
 [![Open in Spaces](https://huggingface.co/datasets/huggingface/badges/resolve/main/open-in-hf-spaces-sm.svg)](https://huggingface.co/spaces/qubvel-hf/omniglue)
+</div>
 
 <br>
 
@@ -130,7 +132,7 @@ Expected output:
 ## Repo TODOs
 
 - ~~Provide `demo.py` example usage script.~~
-- ~~Add to image matching webui~~ credit: [@Vincentqyw](https://github.com/Vincentqyw)
+- ~~Add to image matching webui~~ (credit: [@Vincentqyw](https://github.com/Vincentqyw))
 - Support matching for pre-extracted features.
 - Release eval pipelines for in-domain (MegaDepth).
 - Release eval pipelines for all out-of-domain datasets.
