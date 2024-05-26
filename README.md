@@ -2,8 +2,6 @@
 
 # \[CVPR'24\] Code release for OmniGlue
 
-[![Open in Spaces](https://huggingface.co/datasets/huggingface/badges/resolve/main/open-in-hf-spaces-sm.svg)](https://huggingface.co/spaces/qubvel-hf/omniglue)
-
 <p align="center">
     <a href="https://hwjiang1510.github.io/">Hanwen Jiang</a>,
     <a href="https://scholar.google.com/citations?user=jgSItF4AAAAJ">Arjun Karpur</a>,
@@ -22,6 +20,8 @@
     <a href="#installation"><strong>Usage</strong></a> |
     <a href="https://huggingface.co/spaces/qubvel-hf/omniglue"><strong>Demo</strong></a>
 </div>
+
+[![Open in Spaces](https://huggingface.co/datasets/huggingface/badges/resolve/main/open-in-hf-spaces-sm.svg)](https://huggingface.co/spaces/qubvel-hf/omniglue)
 
 <br>
 
@@ -130,6 +130,7 @@ Expected output:
 ## Repo TODOs
 
 - ~~Provide `demo.py` example usage script.~~
+- ~~Add to image matching webui~~ credit: [@Vincentqyw](https://github.com/Vincentqyw)
 - Support matching for pre-extracted features.
 - Release eval pipelines for in-domain (MegaDepth).
 - Release eval pipelines for all out-of-domain datasets.
