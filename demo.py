@@ -37,8 +37,8 @@ def main(argv) -> None:
 
   # Load images.
   print("> Loading images...")
-  image0 = np.array(Image.open(argv[1]))
-  image1 = np.array(Image.open(argv[2]))
+  image0 = np.array(Image.open(argv[1]).convert("RGB"))
+  image1 = np.array(Image.open(argv[2]).convert("RGB"))
 
   # Load models.
   print("> Loading OmniGlue (and its submodules: SuperPoint & DINOv2)...")
