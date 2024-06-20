@@ -26,6 +26,7 @@ class DINOExtract:
   """Class to initialize DINO model and extract features from an image."""
 
   def __init__(self, cpt_path: str, feature_layer: int = 1):
+    self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     self.feature_layer = feature_layer
     self.model = dino.vit_base()
     state_dict_raw = torch.load(cpt_path, map_location='cpu')
@@ -35,6 +36,7 @@ class DINOExtract:
     #   state_dict[k.replace('blocks', 'blocks.0')] = v
 
     self.model.load_state_dict(state_dict_raw)
+    self.model = self.model.to(self.device)
     self.model.eval()
 
     self.image_size_max = 630
@@ -56,7 +58,7 @@ class DINOExtract:
     """
     image = self._resize_input_image(image)
     image_processed = self._process_image(image)
-    image_processed = image_processed.unsqueeze(0).float()
+    image_processed = image_processed.unsqueeze(0).float().to(self.device)
     features = self.extract_feature(image_processed)
     features = features.squeeze(0).permute(1, 2, 0).cpu().numpy()
     return features
