@@ -19,7 +19,7 @@ from typing import Optional
 import cv2
 import numpy as np
 import tensorflow as tf
-
+import torch
 
 def lookup_descriptor_bilinear(
     keypoint: np.ndarray, descriptor_map: np.ndarray
@@ -272,3 +272,28 @@ def visualize_matches(
         cv2.LINE_AA,
     )
   return viz
+
+def get_device_framework():
+    """Check if GPU is available for both TensorFlow and PyTorch, and return the appropriate device for each."""
+    # TensorFlow device check
+    
+    physical_devices = tf.config.list_physical_devices('GPU')
+    if physical_devices:
+        for gpu in physical_devices:
+            try:
+                tf.config.experimental.set_memory_growth(gpu, True)
+                print(f"GPU configured for {gpu}")
+            except RuntimeError as e:
+                print(e)
+        tf_device = "GPU"
+    else:
+        tf_device ="/CPU:0"
+
+    # Pytorch device check 
+    if torch.cuda.is_available():
+        gpu_idx = [i for i in range(torch.cuda.device_count())]
+        torch_device = torch.device(f"cuda:{gpu_idx[0]}") # Use the first GPU
+    else:
+        torch_device = torch.device("CPU")
+
+    return tf_device, torch_device
