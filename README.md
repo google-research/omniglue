@@ -76,6 +76,7 @@ cd models
 
 # SuperPoint.
 git clone https://github.com/rpautrat/SuperPoint.git
+mv SuperPoint/weights/superpoint_v6_from_tf.pth . 
 mv SuperPoint/pretrained_models/sp_v6.tgz . && rm -rf SuperPoint
 tar zxvf sp_v6.tgz && rm sp_v6.tgz
 
