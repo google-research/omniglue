@@ -19,6 +19,7 @@ from typing import Optional, Tuple
 
 import cv2
 import numpy as np
+import tensorflow as tf 
 import tensorflow.compat.v1 as tf1
 import torch 
 from omniglue import utils
@@ -34,13 +35,21 @@ class SuperPointExtract:
     model_path: string, filepath to saved SuperPoint TF1 model weights.
   """
 
-  def __init__(self, model_path: str):
+  def __init__(self, model_path: str, device):
     self.model_path = model_path
-    self._graph = tf1.Graph()
-    self._sess = tf1.Session(graph=self._graph)
-    tf1.saved_model.loader.load(
-        self._sess, [tf1.saved_model.tag_constants.SERVING], model_path
-    )
+    if device != "GPU":
+      with tf.device(device):
+        self._graph = tf1.Graph()
+        self._sess = tf1.Session(graph=self._graph)
+        tf1.saved_model.loader.load(
+            self._sess, [tf1.saved_model.tag_constants.SERVING], model_path
+        )
+    else:
+        self._graph = tf1.Graph()
+        self._sess = tf1.Session(graph=self._graph)
+        tf1.saved_model.loader.load(
+            self._sess, [tf1.saved_model.tag_constants.SERVING], model_path
+        )
 
   def __call__(
       self,
@@ -222,9 +231,9 @@ class SuperPointExtract_Pytorch:
     images to (320x240) or (640x480).
     """
 
-    def __init__(self, model_path: str):
+    def __init__(self, model_path: str, device):
         """Initialize the SuperPoint model."""
-        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+        self.device = device
         self.model_path = model_path
         self.model = superpoint_pytorch.SuperPoint()
         self.model.load_state_dict(torch.load(self.model_path, map_location=self.device))

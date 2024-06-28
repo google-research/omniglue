@@ -18,6 +18,7 @@ import numpy as np
 from omniglue import dino_extract
 from omniglue import superpoint_extract
 from omniglue import utils
+from omniglue.utils import get_device_framework
 import tensorflow as tf
 
 DINO_FEATURE_DIM = 768
@@ -33,14 +34,32 @@ class OmniGlue:
       sp_export: str | None = None,
       dino_export: str | None = None,
   ) -> None:
+      
+    # # 사용 가능한 모든 물리적 GPU 장치 목록을 가져옵니다.
+    # physical_devices = tf.config.list_physical_devices('GPU')
+    # tf.config.experimental.set_memory_growth(physical_devices[0], True)
+    # # # 각 GPU에 대해 메모리 성장을 설정합니다.
+    # # for gpu in physical_devices:
+    # #     try:
+    # #         tf.config.experimental.set_memory_growth(gpu, True)
+    # #         print(f"Memory growth set for {gpu}")
+    # #     except RuntimeError as e:
+    # #         print(e)
+    # #####
+    tf_device, torch_device = get_device_framework()
+    if tf_device != "GPU":
+        with tf.device(tf_device):
+            self.matcher = tf.saved_model.load(og_export)
+
     self.matcher = tf.saved_model.load(og_export)
+
     if sp_export is not None:
         if sp_export.endswith((".pth", "pt")): 
-            self.sp_extract = superpoint_extract.SuperPointExtract_Pytorch(sp_export)
-        else: 
-            self.sp_extract = superpoint_extract.SuperPointExtract(sp_export)
+            self.sp_extract = superpoint_extract.SuperPointExtract_Pytorch(sp_export, torch_device)
+        else:
+            self.sp_extract = superpoint_extract.SuperPointExtract(sp_export, tf_device)
     if dino_export is not None:
-        self.dino_extract = dino_extract.DINOExtract(dino_export, feature_layer=1)
+        self.dino_extract = dino_extract.DINOExtract(dino_export, feature_layer=1, device=torch_device)
 
   def FindMatches(self, image0: np.ndarray, image1: np.ndarray):
     """TODO(omniglue): docstring."""
