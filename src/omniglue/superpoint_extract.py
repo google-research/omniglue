@@ -19,9 +19,10 @@ from typing import Optional, Tuple
 
 import cv2
 import numpy as np
-from omniglue import utils
 import tensorflow.compat.v1 as tf1
-
+import torch 
+from omniglue import utils
+from omniglue import superpoint_pytorch
 
 class SuperPointExtract:
   """Class to initialize SuperPoint model and extract features from an image.
@@ -212,3 +213,63 @@ class SuperPointExtract:
       descriptors.append(utils.lookup_descriptor_bilinear(kp, descriptor_map))
     descriptors = np.array(descriptors)
     return keypoints, descriptors, scores
+
+
+class SuperPointExtract_Pytorch:
+    """Class to initialize SuperPoint model and extract features from an image.
+
+    To stay consistent with SuperPoint training and eval configurations, resize
+    images to (320x240) or (640x480).
+    """
+
+    def __init__(self, model_path: str):
+        """Initialize the SuperPoint model."""
+        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+        self.model_path = model_path
+        self.model = superpoint_pytorch.SuperPoint()
+        self.model.load_state_dict(torch.load(self.model_path, map_location=self.device))
+        self.model = self.model.to(device=self.device)
+        self.model.eval()
+
+    def __call__(self, image):
+        """Extract features from the image."""
+        return self._extract_features(image)
+
+    def _preprocess_image(self, image):
+        """Convert image to grayscale and normalize values for model input."""
+        image = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
+        image = np.expand_dims(image, 2)
+        image = image.astype(np.float32)
+        image = image / 255.0
+        return image
+
+    def _resize_input_image(self, image, interpolation=cv2.INTER_LINEAR):
+        """Resize image such that both dimensions are divisible by 8."""
+        new_dim = [-1, -1]
+        keypoint_scale_factors = [1.0, 1.0]
+        for i in range(2):
+            dim_size = image.shape[i]
+            mod_eight = dim_size % 8
+            if mod_eight < 4:
+                new_dim[i] = dim_size - mod_eight  # Round down to nearest multiple of 8.
+            elif mod_eight >= 4:
+                new_dim[i] = dim_size + (8 - mod_eight)  # Round up to nearest multiple of 8.
+                keypoint_scale_factors[i] = (new_dim[i] - 1) / (dim_size - 1)
+
+        new_dim = new_dim[::-1]  # Convert from (row, col) to (x,y).
+        keypoint_scale_factors = keypoint_scale_factors[::-1]
+        image = cv2.resize(image, tuple(new_dim), interpolation=interpolation)
+        return image, keypoint_scale_factors
+
+    def _extract_features(self, image):
+        """Extract keypoints, descriptors, and scores from the image."""
+        image, keypoint_scale_factors = self._resize_input_image(image)
+        image_preprocessed = self._preprocess_image(image)
+        image_tensor = torch.from_numpy(image_preprocessed.transpose(2, 0, 1)[None]).float().to(self.device)  # [1, C, H, W]
+
+        with torch.no_grad():
+            pred = self.model({'image': image_tensor})
+
+        keypoints, descriptors, scores = [p[0].cpu().numpy().astype("float64") for p in pred]
+        keypoints = keypoints / keypoint_scale_factors
+        return keypoints, descriptors, scores

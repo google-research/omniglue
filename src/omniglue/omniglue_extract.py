@@ -35,9 +35,12 @@ class OmniGlue:
   ) -> None:
     self.matcher = tf.saved_model.load(og_export)
     if sp_export is not None:
-      self.sp_extract = superpoint_extract.SuperPointExtract(sp_export)
+        if sp_export.endswith((".pth", "pt")): 
+            self.sp_extract = superpoint_extract.SuperPointExtract_Pytorch(sp_export)
+        else: 
+            self.sp_extract = superpoint_extract.SuperPointExtract(sp_export)
     if dino_export is not None:
-      self.dino_extract = dino_extract.DINOExtract(dino_export, feature_layer=1)
+        self.dino_extract = dino_extract.DINOExtract(dino_export, feature_layer=1)
 
   def FindMatches(self, image0: np.ndarray, image1: np.ndarray):
     """TODO(omniglue): docstring."""
