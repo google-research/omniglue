@@ -294,6 +294,6 @@ def get_device_framework():
         gpu_idx = [i for i in range(torch.cuda.device_count())]
         torch_device = torch.device(f"cuda:{gpu_idx[0]}") # Use the first GPU
     else:
-        torch_device = torch.device("CPU")
+        torch_device = torch.device("cpu")
 
     return tf_device, torch_device
