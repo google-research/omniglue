@@ -14,6 +14,8 @@
 
 """Wrapper for performing OmniGlue inference, plus (optionally) SP/DINO."""
 
+from typing import Optional
+
 import numpy as np
 from omniglue import dino_extract
 from omniglue import superpoint_extract
@@ -30,8 +32,8 @@ class OmniGlue:
   def __init__(
       self,
       og_export: str,
-      sp_export: str | None = None,
-      dino_export: str | None = None,
+      sp_export: Optional[str] = None,
+      dino_export: Optional[str] = None,
   ) -> None:
     self.matcher = tf.saved_model.load(og_export)
     if sp_export is not None:
